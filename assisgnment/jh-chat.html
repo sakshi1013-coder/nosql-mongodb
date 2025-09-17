@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=chevron_right" />
+</head>
+<body>
+  
+  <div>
+    <input type="text" name="message" id="msg" placeholder="Typing...">
+    <button id="send-msg">
+      send
+      <span class="material-symbols-outlined">
+         chevron_right
+      </span>
+    </button>
+  </div>
+  
+  <script>
+    let firebaseConfig={ 
+    apiKey: "AIzaSyAbPV6VwZYUhaplgQKkm1nWzSA3xNzG_l0",
+    authDomain: "sakshi-642e3.firebaseapp.com",
+    projectId: "sakshi-642e3",
+    storageBucket: "sakshi-642e3.firebasestorage.app",
+    messagingSenderId: "641355112068",
+    appId: "1:641355112068:web:23dcd54be3f8cb1b4f6cd1",
+    measurementId: "G-8S4CMTKM40"
+    }
+
+    //initialize the firebase app
+    firebase.initializeApp(firebaseConfig);
+    // let usermsg= document.getElementById('msg').value;
+    
+
+    //get button
+    let bhejDo = document.getElementById('send-msg');
+  
+
+//send msg function 
+  bhejDo.addEventListener('click', async () => {
+
+    //getting user input
+    let message = document.getElementById('msg').value;
+
+    try {
+      console.log('inside the sendMsg function');
+      let result = await firebase.firestore().collection('jh-chat').add({ message });
+
+      if (result.exists) {
+        console.log(`Message sent! ${result.data().message}`);
+        getMsg();
+      }
+    }
+    catch (e) {
+      console.log(`error while sending message! ${e}`)
+    }
+    document.getElementById("msg").value = '';
+  });
+
+getMSg();
+//   function getMsg(){
+//     firebase
+//       .firebase()
+//       .collection('jh-chat')
+//       .onSnapshot((snapshot) => {
+//         changes.docChanges().forEach((change)) => {
+//           if (change.type == 'added'){
+
+//           }
+//         })
+//   })
+// }
+
+  </script>
+</body>
+
+<style>
+  
+</style>
+</html>
